@@ -10,9 +10,9 @@ services:
       MYSQL_DATABASE: $DB_NAME
       MYSQL_USER: $DB_USER
       MYSQL_PASSWORD: $DB_PASSWORD
-#    volumes:
-#      - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-#      - /path/to/mariadb/data/on/host:/var/lib/mysql # I want to manage volumes manually.
+    volumes:
+       - ./mariadb-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+    #   - /path/to/mariadb/data/on/host:/var/lib/mysql # I want to manage volumes manually.
 
   php:
     image: wodby/wordpress-php:$PHP_TAG
@@ -35,9 +35,9 @@ services:
 #      PHP_XDEBUG_REMOTE_HOST: 10.254.254.254 # macOS
 #      PHP_XDEBUG_REMOTE_HOST: 10.0.75.1 # Windows
     volumes:
-      - ./:/var/www/html
+      # - ./:/var/www/html
 ## For macOS users (https://wodby.com/docs/stacks/wordpress/local#docker-for-mac)
-#      - ./:/var/www/html:cached # User-guided caching
+      - ./:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
 ## For XHProf and Xdebug profiler traces
 #      - files:/mnt/files
@@ -54,9 +54,9 @@ services:
       NGINX_VHOST_PRESET: wordpress
       #NGINX_SERVER_ROOT: /var/www/html/subdir
     volumes:
-      - ./:/var/www/html
+      # - ./:/var/www/html
 # Options for macOS users (https://wodby.com/docs/stacks/wordpress/local#docker-for-mac)
-#      - ./:/var/www/html:cached # User-guided caching
+      - ./:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
     labels:
     - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
@@ -68,17 +68,17 @@ services:
     - "traefik.http.services.${PROJECT_NAME}_mailhog.loadbalancer.server.port=8025"
     - "traefik.http.routers.${PROJECT_NAME}_mailhog.rule=Host(`mailhog.${PROJECT_BASE_URL}`)"
 
-#  postgres:
-#    image: wodby/postgres:$POSTGRES_TAG
-#    container_name: "${PROJECT_NAME}_postgres"
-#    stop_grace_period: 30s
-#    environment:
-#      POSTGRES_PASSWORD: $DB_PASSWORD
-#      POSTGRES_DB: $DB_NAME
-#      POSTGRES_USER: $DB_USER
-#    volumes:
-#      - ./postgres-init:/docker-entrypoint-initdb.d # Place init file(s) here.
-#      - /path/to/postgres/data/on/host:/var/lib/postgresql/data # I want to manage volumes manually.
+  # postgres:
+  #   image: wodby/postgres:$POSTGRES_TAG
+  #   container_name: "${PROJECT_NAME}_postgres"
+  #   stop_grace_period: 30s
+  #   environment:
+  #     POSTGRES_PASSWORD: $DB_PASSWORD
+  #     POSTGRES_DB: $DB_NAME
+  #     POSTGRES_USER: $DB_USER
+  #   # volumes:
+  #   #   - ./postgres-init:/docker-entrypoint-initdb.d # Place init file(s) here.
+  #     - /path/to/postgres/data/on/host:/var/lib/postgresql/data # I want to manage volumes manually.
 
 #  apache:
 #    image: wodby/apache:$APACHE_TAG
