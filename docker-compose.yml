@@ -37,7 +37,7 @@ services:
     volumes:
       # - ./:/var/www/html
 ## For macOS users (https://wodby.com/docs/stacks/wordpress/local#docker-for-mac)
-      - ./:/var/www/html:cached # User-guided caching
+      - ./codebase/:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
 ## For XHProf and Xdebug profiler traces
 #      - files:/mnt/files
@@ -56,7 +56,7 @@ services:
     volumes:
       # - ./:/var/www/html
 # Options for macOS users (https://wodby.com/docs/stacks/wordpress/local#docker-for-mac)
-      - ./:/var/www/html:cached # User-guided caching
+      - ./codebase/:/var/www/html:cached # User-guided caching
 #      - docker-sync:/var/www/html # Docker-sync
     labels:
     - "traefik.http.routers.${PROJECT_NAME}_nginx.rule=Host(`${PROJECT_BASE_URL}`)"
